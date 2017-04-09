@@ -1,0 +1,54 @@
+{
+  "name": "boo-lang",
+  "version": "0.1.0",
+  "description": "A tiny stack vm and assembler",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "jest",
+    "lint": "tslint src/**/*.ts",
+    "clean": "rm -rf dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jwhitfieldseed/peach.git"
+  },
+  "keywords": [
+    "peach",
+    "language",
+    "assembler",
+    "vm",
+    "virtual machine"
+  ],
+  "author": "Joe Whitfield-Seed <joeseed86@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jwhitfieldseed/boo/issues"
+  },
+  "homepage": "https://github.com/jwhitfieldseed/boo#readme",
+  "dependencies": {
+    "minimist": "^1.2.0",
+    "pegjs": "^0.10.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^18.1.1",
+    "@types/minimist": "^1.2.0",
+    "@types/node": "^7.0.5",
+    "@types/pegjs": "^0.10.0",
+    "jest": "^19.0.2",
+    "tslint": "^4.5.1",
+    "tslint-config-standard": "^4.0.0",
+    "typescript": "^2.2.1"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "<rootDir>/src/__tests__/preprocessor.js"
+    },
+    "testMatch": [
+      "**/__tests__/*tests.ts"
+    ]
+  }
+}

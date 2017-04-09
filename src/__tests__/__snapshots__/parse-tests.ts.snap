@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`iconst 3 1`] = `
+Object {
+  "opcode": "iconst",
+  "operands": Array [
+    3,
+  ],
+}
+`;
