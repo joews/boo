@@ -1,12 +1,16 @@
 start = program
 
-program = instruction
+program = instructions
 
-instruction = opcode:opcode operands:(__ o:operand { return o })* {
-  return { opcode, operands: operands || [] }
+instructions = eol* head:instruction tail:(eol+ i:instruction { return i })* eol* {
+  return [head, ...tail]
 }
 
-opcode = [a-z]+ { return text() }
+instruction = mnemonic:mnemonic operands:(__ o:operand { return o })* {
+  return { mnemonic, operands: operands || [] }
+}
+
+mnemonic = [a-z]+ { return text() }
 
 operand = int
 
@@ -19,4 +23,4 @@ __ = space+
 _ = space*
 
 space = [ \t]
-eol = [\r\n]+
+eol = [\r\n]

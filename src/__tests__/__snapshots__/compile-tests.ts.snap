@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`
+iconst 3
+iconst 5
+iadd
+print
+ 1`] = `ArrayBuffer []`;
+
+exports[`iconst 3 1`] = `ArrayBuffer []`;
