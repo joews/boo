@@ -4,29 +4,38 @@ import getOpcodeByName from "./instructions"
 export default function compile (ast: any) {
   let next = 0;
 
-  let codeSize = getCodeSize(ast)
-
-  const buffer = new ArrayBuffer(codeSize)
-  const machineCode = new Uint8Array(buffer);
+  let [codeSize, stackSize] = getCodeSize(ast)
+  const codeBuffer = new ArrayBuffer(codeSize)
+  const code = new Uint8Array(codeBuffer)
 
   ast.forEach(node => {
     const bytes = visit(node)
-    machineCode.set(bytes, next)
+    code.set(bytes, next)
     next += bytes.length
   })
 
-  return buffer
+  return {
+    code: codeBuffer,
+    stackSize
+  }
 }
 
 // AST pass to compute the size of the compiled code
 function getCodeSize(ast: any) {
-  let size = 0
+  let codeSize = 0
+  let currentStackSize = 0
+  let maxStackSize = 0
+
   ast.forEach(node => {
-    const { argCount } = getOpcodeByName(node.mnemonic)
-    size = size + argCount + 1
+    const { argCount, returnCount } = getOpcodeByName(node.mnemonic)
+    codeSize = codeSize + argCount + 1
+
+    currentStackSize += argCount
+    maxStackSize = Math.max(maxStackSize, currentStackSize)
+    currentStackSize -= returnCount
   })
 
-  return size
+  return [codeSize, maxStackSize]
 }
 
 // AST visitor to return machine code for the given AST node

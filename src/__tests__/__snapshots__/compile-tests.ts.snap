@@ -5,6 +5,16 @@ iconst 3
 iconst 5
 iadd
 print
- 1`] = `ArrayBuffer []`;
+ 1`] = `
+Object {
+  "code": ArrayBuffer [],
+  "stackSize": 2,
+}
+`;
 
-exports[`iconst 3 1`] = `ArrayBuffer []`;
+exports[`iconst 3 1`] = `
+Object {
+  "code": ArrayBuffer [],
+  "stackSize": 1,
+}
+`;

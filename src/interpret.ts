@@ -1,13 +1,22 @@
 // TODO instance state
-// TODO typed arrays with ip/sp position registers
-let codeStack: Uint8Array
+
+// code memory and instructioon pointer
+// ip points to the next instruction to execute
+let code: Uint8Array
 let ip = 0
 
-let operandStack: number[] = []
+// stack data memory and stack pointer
+// sp points to the last address in the stack
+let operandStack: Uint8Array
+let sp = -1
 
-export default function interpret(code: Uint8Array) {
-  codeStack = code
+export default function interpret(compiledProgram) {
+  code = new Uint8Array(compiledProgram.code)
   ip = 0
+  sp = -1
+
+  const operandBuffer = new ArrayBuffer(compiledProgram.stackSize)
+  operandStack = new Uint8Array(operandBuffer)
 
   // TODO halt instruction
   while (ip < code.length) {
@@ -19,25 +28,33 @@ export default function interpret(code: Uint8Array) {
 }
 
 function visit () {
-  console.log("IP", ip)
-  const opcode = codeStack[ip++]
-  console.log("OPCODE:", opcode)
-  console.log("CODE STACK:", codeStack)
-  console.log("OP STACK", operandStack)
+  const opcode = code[ip++]
+  console.log(`TRACE op ${opcode}@${ip} stack [${operandStack}]`)
 
   // TODO manage opcodes
   switch (opcode) {
     case 0: // iconst
-      console.log("iconst of ", codeStack[ip])
-      return operandStack.push(codeStack[ip ++])
+      console.log("TRACE - iconst ", code[ip])
+      return push(code[ip ++])
     case 1: // iadd
-      console.log("add")
-      const result = operandStack.pop() + operandStack.pop()
-      return operandStack.push(result)
+      const a = pop()
+      const b = pop()
+      console.log(`TRACE - add ${a} + ${b}`)
+      return push(a + b)
     case 2: // print
-      console.log("print")
-      return console.log(operandStack.pop())
+      console.log("TRACE - print")
+      return console.log(pop())
     default:
       throw new Error("bad opcode " + opcode)
   }
+}
+
+function push(byte: number) {
+  console.log(`TRACE - push sp @ ${sp}`)
+  operandStack[++sp] = byte & 0xff
+}
+
+function pop() {
+  console.log(`TRACE - pop sp @ ${sp}`)
+  return operandStack[sp--]
 }
