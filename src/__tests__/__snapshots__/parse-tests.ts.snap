@@ -3,6 +3,7 @@
 exports[`iconst 3 1`] = `
 Array [
   Object {
+    "kind": "instruction",
     "mnemonic": "iconst",
     "operands": Array [
       3,

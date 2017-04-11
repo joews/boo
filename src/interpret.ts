@@ -1,17 +1,18 @@
+import { Program } from "./types"
 // TODO instance state
 
 // code memory and instructioon pointer
 // ip points to the next instruction to execute
 let code: Uint8Array
-let ip = 0
+let ip: number
 
 // stack data memory and stack pointer
 // sp points to the last address in the stack
 let operandStack: Uint8Array
-let sp = -1
+let sp: number
 
-export default function interpret(compiledProgram) {
-  code = new Uint8Array(compiledProgram.code)
+export default function interpret(compiledProgram: Program): number {
+  code = compiledProgram.code
   ip = 0
   sp = -1
 
@@ -27,7 +28,7 @@ export default function interpret(compiledProgram) {
   return operandStack[0]
 }
 
-function visit () {
+function visit(): void {
   const opcode = code[ip++]
   console.log(`TRACE op ${opcode}@${ip} stack [${operandStack}]`)
 
@@ -49,12 +50,13 @@ function visit () {
   }
 }
 
-function push(byte: number) {
+
+function push(byte: number): void {
   console.log(`TRACE - push sp @ ${sp}`)
   operandStack[++sp] = byte & 0xff
 }
 
-function pop() {
+function pop(): number {
   console.log(`TRACE - pop sp @ ${sp}`)
   return operandStack[sp--]
 }

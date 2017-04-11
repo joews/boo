@@ -7,7 +7,7 @@ instructions = eol* head:instruction tail:(eol+ i:instruction { return i })* eol
 }
 
 instruction = mnemonic:mnemonic operands:(__ o:operand { return o })* {
-  return { mnemonic, operands: operands || [] }
+  return { kind: "instruction", mnemonic, operands: operands || [] }
 }
 
 mnemonic = [a-z]+ { return text() }
