@@ -1,5 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`
+
+.globals      2043543
+
+iconst 3
+
+ 1`] = `
+Array [
+  Object {
+    "globals": 2043543,
+  },
+  Object {
+    "kind": "instruction",
+    "mnemonic": "iconst",
+    "operands": Array [
+      3,
+    ],
+  },
+]
+`;
+
+exports[`.globals 3 1`] = `"Expected [0-9], [\\\\r\\\\n], or [a-z] but end of input found."`;
+
 exports[`iconst 3 1`] = `
 Array [
   Object {

@@ -1,4 +1,4 @@
-import { Ast, AstNode, InstructionNode } from "./types"
+import { Ast, AstNode, InstructionNode, Program } from "./types"
 import getOpcodeByName from "./instructions"
 
 // TODO instance state
@@ -6,24 +6,26 @@ let code: Uint8Array
 let next: number
 
 // AST pass to compile the given AST to machine code
-export default function compile (ast: Ast) {
+export default function compile (ast: Ast): Program {
   next = 0;
 
-  let [codeSize, stackSize] = getCodeSize(ast)
+  let [codeSize, stackSize, globalSize] = getCodeSize(ast)
   const codeBuffer = new ArrayBuffer(codeSize)
   code = new Uint8Array(codeBuffer)
 
   ast.forEach(visit)
 
   return {
-    code: codeBuffer,
-    stackSize
+    code,
+    stackSize,
+    globalSize
   }
 }
 
 // AST pass to compute the size of the compiled code
 function getCodeSize(ast: Ast) {
   let codeSize = 0
+  let globalSize = 0
   let currentStackSize = 0
   let maxStackSize = 0
 
@@ -35,10 +37,12 @@ function getCodeSize(ast: Ast) {
       currentStackSize += argCount
       maxStackSize = Math.max(maxStackSize, currentStackSize)
       currentStackSize -= returnCount
+    } else if (node.kind === "header") {
+      globalSize = node.globals
     }
   })
 
-  return [codeSize, maxStackSize]
+  return [codeSize, maxStackSize, globalSize]
 }
 
 // AST visitor to return machine code for the given AST node
@@ -46,6 +50,8 @@ function visit (node: AstNode): void {
   switch (node.kind) {
     case "instruction":
       return visitInstruction(node)
+    case "header":
+      break
   }
 }
 

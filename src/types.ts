@@ -2,7 +2,13 @@
 // Assembler AST types
 //
 export type AstNode
-  = InstructionNode
+  = HeaderNode
+  | InstructionNode
+
+export type HeaderNode = {
+  kind: "header",
+  globals: number
+}
 
 export type InstructionNode = {
   kind: "instruction",
@@ -17,5 +23,6 @@ export type Ast = AstNode[]
 //
 export type Program = {
   code: Uint8Array,
-  stackSize: number
+  stackSize: number,
+  globalSize: number
 }

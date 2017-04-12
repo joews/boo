@@ -8,4 +8,21 @@ function testParse (source: string) {
   })
 }
 
+function testFails (source: string) {
+  test(source, () => {
+    expect(() => parse(source)).toThrowErrorMatchingSnapshot()
+  })
+}
+
 testParse("iconst 3")
+
+// a program needs at least one instruction
+testFails(".globals 3")
+
+testParse(`
+
+.globals      2043543
+
+iconst 3
+
+`)

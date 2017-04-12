@@ -1,20 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`
+.globals 3
 iconst 3
 iconst 5
 iadd
 print
  1`] = `
 Object {
-  "code": ArrayBuffer [],
+  "code": Uint8Array [
+    0,
+    3,
+    0,
+    5,
+    1,
+    2,
+  ],
+  "globalSize": 0,
   "stackSize": 2,
 }
 `;
 
 exports[`iconst 3 1`] = `
 Object {
-  "code": ArrayBuffer [],
+  "code": Uint8Array [
+    0,
+    3,
+  ],
+  "globalSize": 0,
   "stackSize": 1,
 }
 `;

@@ -1,6 +1,16 @@
 start = program
 
-program = instructions
+program = header:header? instructions:instructions {
+  if (header) {
+    instructions.unshift(header)
+  }
+
+  return instructions
+}
+
+header = eol* ".globals" __ globals:int eol* {
+  return { kind: "header", globals }
+}
 
 instructions = eol* head:instruction tail:(eol+ i:instruction { return i })* eol* {
   return [head, ...tail]
