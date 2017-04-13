@@ -3,15 +3,27 @@ import getOpcodeByName from "./instructions"
 
 // TODO instance state
 let code: Uint8Array
-let next: number
+let ip: number
+
+// map labels to their decoded code address
+let labels: { [label:string]: number }
+
+// instructions can refer to labels that have not yet been defined.
+// keep a map of labels to instructions that are waiting for the label's
+// code address so that the address can be filled in ("backpatched") when
+// we reach its declaration.
+let labelForwardRefs: { [label:string]: number[] }
 
 // AST pass to compile the given AST to machine code
 export default function compile (ast: Ast): Program {
-  next = 0;
+  ip = 0;
 
   let [codeSize, stackSize, globalSize] = getCodeSize(ast)
   const codeBuffer = new ArrayBuffer(codeSize)
   code = new Uint8Array(codeBuffer)
+
+  labels = {}
+  labelForwardRefs = {}
 
   ast.forEach(visit)
 
@@ -57,16 +69,69 @@ function visit (node: AstNode): void {
 
 function visitInstruction(node: InstructionNode) {
   const { opcode, argCount } = getOpcodeByName(node.mnemonic)
+
+  if (node.label) {
+    resolveLabel(node)
+  }
+
   const buffer = new ArrayBuffer(1 + argCount)
   const view = new Uint8Array(buffer);
 
   view.set([opcode], 0)
 
-  // assume all operands are byte for now
-  node.operands.forEach((operand: number, i: number) => {
+  const operands = mapOperands(node)
+
+  operands.forEach((operand: number, i: number) => {
     view.set([operand], i + 1)
   })
 
-  code.set(view, next)
-  next += view.length
+  code.set(view, ip)
+  ip += view.length
+}
+
+// Return the byte form of the node's operands
+// byte input: identity
+// string/float/function input: TODO constant pool
+// label input: map to label
+function mapOperands(node: InstructionNode) {
+  // TODO somehow switch on operand type, not instruction
+  switch (node.mnemonic) {
+    case "jmp":
+      return getLabelAddress(node.operands[0])
+    default:
+      return node.operands
+  }
+}
+
+// Get the code address that `label` resolves to. If `label` has not yet been
+// defined, add the current ip to the list of instructions to backpatch when
+// we reach the label declaration and return a sentinel.
+function getLabelAddress(label: string) {
+  const address = labels[label]
+  if (address) {
+    return [labels[label]]
+  } else {
+    let refs = labelForwardRefs[label] || []
+    refs.push(ip)
+    labelForwardRefs[label] = refs
+    return [-1]
+  }
+}
+
+// Resolve the node's label to its code address (the current ip)
+// If any instructions have referred to this label before now,
+// backpatch their references
+function resolveLabel(node: InstructionNode) {
+  if (node.label) {
+    labels[node.label] = ip
+
+    const forwardRefs = labelForwardRefs[node.label]
+    if (forwardRefs) {
+      forwardRefs.forEach(ref => {
+        code[ref + 1] = ip
+      })
+    }
+
+    delete labelForwardRefs[node.label]
+  }
 }

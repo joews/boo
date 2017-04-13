@@ -9,7 +9,7 @@ export default function getInstructionByName(mnemonic: string) {
   return instruction
 }
 
-// [mnemonic, outputCount, inputCount]
+// [mnemonic, argCount, returnCount]
 type instructionShorthand = [string, number, number]
 
 const instructions: instructionShorthand[] = [
@@ -17,7 +17,8 @@ const instructions: instructionShorthand[] = [
   ["iadd", 0, 2],
   ["print", 0, 0],
   ["gstore", 1, 0],
-  ["gload", 1, 1]
+  ["gload", 1, 1],
+  ["jmp", 1, 0]
 ]
 
 // Export mnemonic -> instruction map via getInstructionByName

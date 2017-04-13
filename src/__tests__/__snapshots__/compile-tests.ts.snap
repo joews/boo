@@ -21,6 +21,53 @@ Object {
 }
 `;
 
+exports[`
+first: iconst 1
+print
+second: iconst 2
+iadd
+ 1`] = `
+Object {
+  "code": Uint8Array [
+    0,
+    1,
+    2,
+    0,
+    2,
+    1,
+  ],
+  "globalSize": 0,
+  "stackSize": 2,
+}
+`;
+
+exports[`
+iconst 1
+jmp skip
+iconst 2
+iadd
+skip:
+  iconst 3
+iadd
+ 1`] = `
+Object {
+  "code": Uint8Array [
+    0,
+    1,
+    5,
+    7,
+    0,
+    2,
+    1,
+    0,
+    3,
+    1,
+  ],
+  "globalSize": 0,
+  "stackSize": 3,
+}
+`;
+
 exports[`iconst 3 1`] = `
 Object {
   "code": Uint8Array [

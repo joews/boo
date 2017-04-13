@@ -26,3 +26,11 @@ testParse(`
 iconst 3
 
 `)
+
+testParse(`
+first: iconst 1
+second:
+iconst 2
+third:
+     iconst 3
+`)

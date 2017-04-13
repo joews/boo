@@ -13,7 +13,8 @@ export type HeaderNode = {
 export type InstructionNode = {
   kind: "instruction",
   mnemonic: string,
-  operands: any[]
+  operands: any[],
+  label?: string
 }
 
 export type Ast = AstNode[]

@@ -14,6 +14,42 @@ Array [
   },
   Object {
     "kind": "instruction",
+    "label": null,
+    "mnemonic": "iconst",
+    "operands": Array [
+      3,
+    ],
+  },
+]
+`;
+
+exports[`
+first: iconst 1
+second:
+iconst 2
+third:
+     iconst 3
+ 1`] = `
+Array [
+  Object {
+    "kind": "instruction",
+    "label": "first",
+    "mnemonic": "iconst",
+    "operands": Array [
+      1,
+    ],
+  },
+  Object {
+    "kind": "instruction",
+    "label": "second",
+    "mnemonic": "iconst",
+    "operands": Array [
+      2,
+    ],
+  },
+  Object {
+    "kind": "instruction",
+    "label": "third",
     "mnemonic": "iconst",
     "operands": Array [
       3,
@@ -28,6 +64,7 @@ exports[`iconst 3 1`] = `
 Array [
   Object {
     "kind": "instruction",
+    "label": null,
     "mnemonic": "iconst",
     "operands": Array [
       3,

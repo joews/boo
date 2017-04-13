@@ -36,13 +36,12 @@ export default function interpret(compiledProgram: Program): number {
 function visit(): void {
   const opcode = code[ip++]
   const mnemonic = mnemonicsByOpcode[opcode]
-  console.log(`TRACE op ${opcode} ${mnemonic} @${ip - 1}\tstack [${operandStack}] \tglobals [${globals}]`)
+  console.log(`TRACE op ${opcode} ${mnemonic} @${ip - 1}\tstack [${operandStack}]/${sp} \tglobals [${globals}]`)
 
   switch (mnemonic) {
     case "gload":
       return push(globals[code[ip++]])
     case "gstore":
-      console.log(`gstore ${code[ip]}`)
       globals[code[ip++]] = pop()
       break
     case "iconst":
@@ -51,6 +50,9 @@ function visit(): void {
       return push(pop() + pop())
     case "print":
       return console.log(pop())
+    case "jmp":
+      ip = code[ip++]
+      break
     default:
       throw new Error("bad opcode " + opcode)
   }

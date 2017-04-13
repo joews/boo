@@ -16,13 +16,22 @@ instructions = eol* head:instruction tail:(eol+ i:instruction { return i })* eol
   return [head, ...tail]
 }
 
-instruction = mnemonic:mnemonic operands:(__ o:operand { return o })* {
-  return { kind: "instruction", mnemonic, operands: operands || [] }
+instruction = eol* label:label? mnemonic:mnemonic operands:(__ o:operand { return o })* {
+  return {
+    kind: "instruction",
+    mnemonic, operands: operands || [],
+    label: label || null
+  }
 }
 
 mnemonic = [a-z]+ { return text() }
+label_name = [a-z]+ { return text() }
 
-operand = int
+label = name:label_name ":" ___ {
+  return name
+}
+
+operand = int / label_name
 
 int = chars:[0-9]+ { return +text() }
 
@@ -31,6 +40,9 @@ __ = space+
 
 // optional whitespace
 _ = space*
+
+// mandatory space or EOL
+___ = (space / eol)+
 
 space = [ \t]
 eol = [\r\n]
