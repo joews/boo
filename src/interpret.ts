@@ -1,6 +1,7 @@
 import { Program } from "./types"
 import { mnemonicsByOpcode } from "./instructions"
-// TODO instance state
+
+////// TODO instance state
 
 // code memory and instructioon pointer
 // ip points to the next instruction to execute
@@ -14,7 +15,14 @@ let sp: number
 
 let globals: Uint8Array
 
-export default function interpret(compiledProgram: Program): number {
+let shouldTrace: boolean
+////// TODO end instance state
+
+interface options {
+  trace: boolean
+}
+
+export default function interpret(compiledProgram: Program, options: options = { trace: false }): number {
   code = compiledProgram.code
   ip = 0
   sp = -1
@@ -23,6 +31,8 @@ export default function interpret(compiledProgram: Program): number {
   operandStack = new Uint8Array(operandBuffer)
 
   globals = new Uint8Array(compiledProgram.globalSize)
+
+  shouldTrace = options.trace
 
   // TODO halt instruction
   while (ip < code.length) {
@@ -37,8 +47,9 @@ function visit(): void {
   const opcode = code[ip++]
   const mnemonic = mnemonicsByOpcode[opcode]
 
-  // TODO flag
-  trace(opcode, mnemonic)
+  if (shouldTrace) {
+    trace(opcode, mnemonic)
+  }
 
   switch (mnemonic) {
     case "gload":

@@ -6,7 +6,7 @@ import interpret from '../interpret'
 
 function testInterpretBinary (name: string, program: Program, expected: any) {
   test(name, () => {
-    const interpreted = interpret(program)
+    const interpreted = interpret(program, { trace: true })
     expect(interpreted).toEqual(expected)
   })
 }
@@ -17,7 +17,7 @@ function testInterpret (code: string, expected: any) {
     // console.log(parsed)
     const compiled = compile(parsed)
     // console.log(compiled)
-    const interpreted = interpret(compiled)
+    const interpreted = interpret(compiled, { trace: true })
     expect(interpreted).toEqual(expected)
   })
 }
