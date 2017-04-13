@@ -49,3 +49,9 @@ skip:
   iconst 3
 iadd
 `, 4)
+
+testInterpret(`
+iconst 1
+halt
+iconst 2
+`, 1)

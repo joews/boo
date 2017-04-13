@@ -34,13 +34,12 @@ export default function interpret(compiledProgram: Program, options: options = {
 
   shouldTrace = options.trace
 
-  // TODO halt instruction
   while (ip < code.length) {
     visit()
   }
 
   // the value of a program is the value of the last expression
-  return operandStack[0]
+  return operandStack[sp]
 }
 
 function visit(): void {
@@ -66,8 +65,11 @@ function visit(): void {
     case "jmp":
       ip = code[ip++]
       break
+    case "halt":
+      ip = code.length
+      break
     default:
-      throw new Error("bad opcode " + opcode)
+      throw new Error("bad opcode " + mnemonic)
   }
 }
 

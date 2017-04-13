@@ -18,7 +18,8 @@ const instructions: instructionShorthand[] = [
   ["print", 0, 0],
   ["gstore", 1, 0],
   ["gload", 1, 1],
-  ["jmp", 1, 0]
+  ["jmp", 1, 0],
+  ["halt", 0, 0]
 ]
 
 // Export mnemonic -> instruction map via getInstructionByName
