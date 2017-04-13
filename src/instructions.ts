@@ -1,3 +1,5 @@
+import { instruction } from "./types"
+
 export default function getInstructionByName(mnemonic: string) {
   const instruction = instructionsByMnemonic[mnemonic]
   if (instruction == null) {
@@ -8,25 +10,28 @@ export default function getInstructionByName(mnemonic: string) {
 }
 
 // [mnemonic, outputCount, inputCount]
+type instructionShorthand = [string, number, number]
+
 const instructions: instructionShorthand[] = [
   ["iconst", 1, 0],
   ["iadd", 0, 2],
   ["print", 0, 0]
 ]
 
-type instructionShorthand = [string, number, number]
+// Export mnemonic -> instruction map via getInstructionByName
+// so we can throw at band instructions at assemble time
+const instructionsByMnemonic: { [mnemonic:string]: instruction } = {}
 
-interface instruction {
-  opcode: number,
-  mnemonic: string,
-  argCount: number,
-  returnCount: number
-}
-
-const instructionsByMnemonic: { [s:string]: instruction }
-   = { }
+// Export opcode -> mnemonic map directly to save a function call
+// at interpret time
+export const mnemonicsByOpcode: { [i:number]: string } = {}
 
 for (let i = 0; i < instructions.length; i ++) {
   const [mnemonic, argCount, returnCount] = instructions[i]
   instructionsByMnemonic[mnemonic] = { opcode: i, mnemonic, argCount, returnCount }
+}
+
+for (let i = 0; i < instructions.length; i ++) {
+  const [mnemonic] = instructions[i]
+  mnemonicsByOpcode[i] = mnemonic
 }

@@ -26,3 +26,13 @@ export type Program = {
   stackSize: number,
   globalSize: number
 }
+
+//
+// Instructions
+//
+export interface instruction {
+  opcode: number,
+  mnemonic: string,
+  argCount: number,
+  returnCount: number
+}

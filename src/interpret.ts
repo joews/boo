@@ -1,4 +1,5 @@
 import { Program } from "./types"
+import { mnemonicsByOpcode } from "./instructions"
 // TODO instance state
 
 // code memory and instructioon pointer
@@ -30,19 +31,19 @@ export default function interpret(compiledProgram: Program): number {
 
 function visit(): void {
   const opcode = code[ip++]
-  console.log(`TRACE op ${opcode}@${ip} stack [${operandStack}]`)
+  const mnemonic = mnemonicsByOpcode[opcode]
+  console.log(`TRACE op ${opcode} ${mnemonic} @${ip}\tstack [${operandStack}]`)
 
-  // TODO manage opcodes
-  switch (opcode) {
-    case 0: // iconst
+  switch (mnemonic) {
+    case "iconst":
       console.log("TRACE - iconst ", code[ip])
       return push(code[ip ++])
-    case 1: // iadd
+    case "iadd":
       const a = pop()
       const b = pop()
       console.log(`TRACE - add ${a} + ${b}`)
       return push(a + b)
-    case 2: // print
+    case "print":
       console.log("TRACE - print")
       return console.log(pop())
     default:
