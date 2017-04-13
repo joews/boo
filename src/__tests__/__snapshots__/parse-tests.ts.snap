@@ -10,6 +10,7 @@ iconst 3
 Array [
   Object {
     "globals": 2043543,
+    "kind": "header",
   },
   Object {
     "kind": "instruction",
