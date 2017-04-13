@@ -15,7 +15,9 @@ type instructionShorthand = [string, number, number]
 const instructions: instructionShorthand[] = [
   ["iconst", 1, 0],
   ["iadd", 0, 2],
-  ["print", 0, 0]
+  ["print", 0, 0],
+  ["gstore", 1, 0],
+  ["gload", 1, 1]
 ]
 
 // Export mnemonic -> instruction map via getInstructionByName

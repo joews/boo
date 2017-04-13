@@ -12,6 +12,8 @@ let ip: number
 let operandStack: Uint8Array
 let sp: number
 
+let globals: Uint8Array
+
 export default function interpret(compiledProgram: Program): number {
   code = compiledProgram.code
   ip = 0
@@ -19,6 +21,8 @@ export default function interpret(compiledProgram: Program): number {
 
   const operandBuffer = new ArrayBuffer(compiledProgram.stackSize)
   operandStack = new Uint8Array(operandBuffer)
+
+  globals = new Uint8Array(compiledProgram.globalSize)
 
   // TODO halt instruction
   while (ip < code.length) {
@@ -32,19 +36,20 @@ export default function interpret(compiledProgram: Program): number {
 function visit(): void {
   const opcode = code[ip++]
   const mnemonic = mnemonicsByOpcode[opcode]
-  console.log(`TRACE op ${opcode} ${mnemonic} @${ip}\tstack [${operandStack}]`)
+  console.log(`TRACE op ${opcode} ${mnemonic} @${ip - 1}\tstack [${operandStack}] \tglobals [${globals}]`)
 
   switch (mnemonic) {
+    case "gload":
+      return push(globals[code[ip++]])
+    case "gstore":
+      console.log(`gstore ${code[ip]}`)
+      globals[code[ip++]] = pop()
+      break
     case "iconst":
-      console.log("TRACE - iconst ", code[ip])
-      return push(code[ip ++])
+      return push(code[ip++])
     case "iadd":
-      const a = pop()
-      const b = pop()
-      console.log(`TRACE - add ${a} + ${b}`)
-      return push(a + b)
+      return push(pop() + pop())
     case "print":
-      console.log("TRACE - print")
       return console.log(pop())
     default:
       throw new Error("bad opcode " + opcode)
@@ -53,11 +58,9 @@ function visit(): void {
 
 
 function push(byte: number): void {
-  console.log(`TRACE - push sp @ ${sp}`)
   operandStack[++sp] = byte & 0xff
 }
 
 function pop(): number {
-  console.log(`TRACE - pop sp @ ${sp}`)
   return operandStack[sp--]
 }
