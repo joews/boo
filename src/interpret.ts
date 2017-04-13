@@ -36,7 +36,9 @@ export default function interpret(compiledProgram: Program): number {
 function visit(): void {
   const opcode = code[ip++]
   const mnemonic = mnemonicsByOpcode[opcode]
-  console.log(`TRACE op ${opcode} ${mnemonic} @${ip - 1}\tstack [${operandStack}]/${sp} \tglobals [${globals}]`)
+
+  // TODO flag
+  trace(opcode, mnemonic)
 
   switch (mnemonic) {
     case "gload":
@@ -58,11 +60,20 @@ function visit(): void {
   }
 }
 
-
 function push(byte: number): void {
   operandStack[++sp] = byte & 0xff
 }
 
 function pop(): number {
   return operandStack[sp--]
+}
+
+function trace(opcode: number, mnemonic: string) {
+  // show the defined region of the stack only
+  let stack = []
+  for (let i = 0; i <= sp; i ++) {
+    stack[i] = operandStack[i]
+  }
+
+  console.log(`TRACE ${mnemonic}(${opcode})@${ip - 1}\t\tstack [${stack}] \tglobals [${globals}]`)
 }
