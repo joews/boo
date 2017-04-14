@@ -68,6 +68,12 @@ function visit(): void {
     case "halt":
       ip = code.length
       break
+    case "jne":
+      const label = code[ip++]
+      if (pop() !== pop()) {
+        ip = label
+      } else {}
+      break
     default:
       throw new Error("bad opcode " + mnemonic)
   }

@@ -55,3 +55,29 @@ iconst 1
 halt
 iconst 2
 `, 1)
+
+/*
+i = 0
+do:
+  print i
+  i = i + 1
+while i != 3:
+i
+*/
+testInterpret(`
+.globals 1
+iconst 1
+gstore 0
+
+next:
+
+iconst 1
+gload 0
+iadd
+gstore 0
+
+gload 0
+iconst 3
+jne next
+gload 0
+`, 3)

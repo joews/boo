@@ -97,6 +97,7 @@ function mapOperands(node: InstructionNode) {
   // TODO somehow switch on operand type, not instruction
   switch (node.mnemonic) {
     case "jmp":
+    case "jne":
       return getLabelAddress(node.operands[0])
     default:
       return node.operands
