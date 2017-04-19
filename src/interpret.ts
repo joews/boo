@@ -33,6 +33,9 @@ export default function interpret(compiledProgram: Program, options: options = {
   globals = new Uint8Array(compiledProgram.globalSize)
 
   shouldTrace = options.trace
+  if (shouldTrace) {
+    traceStart()
+  }
 
   while (ip < code.length) {
     visit()
@@ -74,6 +77,18 @@ function visit(): void {
         ip = label
       } else {}
       break
+    case "eq":
+      return push(+(pop() === pop()))
+    case "ne":
+      return push(+(pop() !== pop()))
+    case "lt":
+      return push(+(pop() < pop()))
+    case "gt":
+      return push(+(pop() > pop()))
+    case "lte":
+      return push(+(pop() <= pop()))
+    case "gte":
+      return push(+(pop() >= pop()))
     default:
       throw new Error("bad opcode " + mnemonic)
   }
@@ -85,6 +100,10 @@ function push(byte: number): void {
 
 function pop(): number {
   return operandStack[sp--]
+}
+
+function traceStart() {
+  console.log(`TRACE NEW PROGRAM with code size: ${code.length}, stack size: ${operandStack.length}, globals: ${globals.length}`)
 }
 
 function trace(opcode: number, mnemonic: string) {

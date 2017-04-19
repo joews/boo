@@ -81,3 +81,75 @@ iconst 3
 jne next
 gload 0
 `, 3)
+
+testInterpret(`
+iconst 1
+iconst 1
+eq
+`, 1)
+
+testInterpret(`
+iconst 1
+iconst 2
+eq
+`, 0)
+
+testInterpret(`
+iconst 7
+iconst 2
+ne
+`, 1)
+
+testInterpret(`
+iconst 7
+iconst 7
+ne
+`, 0)
+
+testInterpret(`
+iconst 2
+iconst 1
+lt
+`, 1)
+
+testInterpret(`
+iconst 2
+iconst 2
+lt
+`, 0)
+
+testInterpret(`
+iconst 2
+iconst 1
+lte
+`, 1)
+
+testInterpret(`
+iconst 2
+iconst 2
+lte
+`, 1)
+
+testInterpret(`
+iconst 1
+iconst 2
+gt
+`, 1)
+
+testInterpret(`
+iconst 2
+iconst 2
+gt
+`, 0)
+
+testInterpret(`
+iconst 1
+iconst 2
+gte
+`, 1)
+
+testInterpret(`
+iconst 2
+iconst 2
+gte
+`, 1)
