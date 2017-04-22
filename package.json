@@ -3,11 +3,6 @@
   "version": "0.1.0",
   "description": "A tiny stack vm and assembler",
   "main": "dist/index.js",
-  "scripts": {
-    "test": "jest",
-    "lint": "tslint src/**/*.ts",
-    "clean": "rm -rf dist"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jwhitfieldseed/peach.git"
