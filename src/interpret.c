@@ -67,6 +67,39 @@ void step(State* state, int opcode) {
     case 2: // printf
       printf("%d\n", state->stack[state->sp--]);
       break;
+    case 8: // eq
+      a = state->stack[state->sp--];
+      b = state->stack[state->sp--];
+      state->stack[++state->sp] = a == b;
+      break;
+    case 9: // ne
+      a = state->stack[state->sp--];
+      b = state->stack[state->sp--];
+      state->stack[++state->sp] = a != b;
+      break;
+    case 10: // lt
+      a = state->stack[state->sp--];
+      b = state->stack[state->sp--];
+      state->stack[++state->sp] = a < b;
+      break;
+    case 11: // gt
+      a = state->stack[state->sp--];
+      b = state->stack[state->sp--];
+      state->stack[++state->sp] = a > b;
+      break;
+    case 12: // lte
+      a = state->stack[state->sp--];
+      b = state->stack[state->sp--];
+      state->stack[++state->sp] = a <= b;
+      break;
+    case 13: // gte
+      a = state->stack[state->sp--];
+      b = state->stack[state->sp--];
+      state->stack[++state->sp] = a >= b;
+      break;
+    default:
+      fprintf(stderr, "Unknown opcode %d", opcode);
+      exit(1);
   }
 }
 
