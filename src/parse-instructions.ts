@@ -5,7 +5,7 @@ import { Instruction } from './types'
 
 const parserSource = readFileSync(join(__dirname, 'instructions.pegjs'), 'utf8')
 const parser = generate(parserSource)
-const instructions = readFileSync(join(__dirname, 'boo.op'), 'utf8')
+const instructions = readFileSync(join(__dirname, 'boo.instructions'), 'utf8')
 
 export default function read (): Instruction[] {
   return parse(instructions)
