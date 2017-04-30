@@ -26,9 +26,9 @@ testCompile(`
 first: iconst 1
 print
 second: iconst 2
+third: iconst 3
 iadd
 `)
-
 
 testCompile(`
 iconst 1

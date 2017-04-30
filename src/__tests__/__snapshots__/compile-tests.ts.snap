@@ -25,6 +25,7 @@ exports[`
 first: iconst 1
 print
 second: iconst 2
+third: iconst 3
 iadd
  1`] = `
 Object {
@@ -34,6 +35,8 @@ Object {
     2,
     0,
     2,
+    0,
+    3,
     1,
   ],
   "globalSize": 0,
@@ -64,7 +67,7 @@ Object {
     1,
   ],
   "globalSize": 0,
-  "stackSize": 3,
+  "stackSize": 2,
 }
 `;
 

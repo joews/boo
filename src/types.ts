@@ -31,9 +31,10 @@ export type Program = {
 //
 // Instructions
 //
-export interface instruction {
+export interface Instruction {
   opcode: number,
   mnemonic: string,
-  argCount: number,
-  returnCount: number
+  argTypes: string[],
+  operandTypes: string[],
+  resultTypes: string[]
 }

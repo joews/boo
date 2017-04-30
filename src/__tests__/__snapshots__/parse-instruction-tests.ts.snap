@@ -1,0 +1,200 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`0x00 noop (): () -> () 1`] = `
+Array [
+  Object {
+    "argTypes": Array [],
+    "mnemonic": "noop",
+    "opcode": "0x00",
+    "operandTypes": Array [],
+    "resultTypes": Array [],
+  },
+]
+`;
+
+exports[`0x10 iadd (): (int32, int32) -> (int32) 1`] = `
+Array [
+  Object {
+    "argTypes": Array [],
+    "mnemonic": "iadd",
+    "opcode": "0x10",
+    "operandTypes": Array [
+      "int32",
+      "int32",
+    ],
+    "resultTypes": Array [
+      "int32",
+    ],
+  },
+]
+`;
+
+exports[`0x20 jmp (label): () -> () 1`] = `
+Array [
+  Object {
+    "argTypes": Array [
+      "label",
+    ],
+    "mnemonic": "jmp",
+    "opcode": "0x20",
+    "operandTypes": Array [],
+    "resultTypes": Array [],
+  },
+]
+`;
+
+exports[`read all instructions 1`] = `
+Array [
+  Object {
+    "argTypes": Array [
+      "int32",
+    ],
+    "mnemonic": "iconst",
+    "opcode": "0x00",
+    "operandTypes": Array [],
+    "resultTypes": Array [
+      "int32",
+    ],
+  },
+  Object {
+    "argTypes": Array [],
+    "mnemonic": "iadd",
+    "opcode": "0x01",
+    "operandTypes": Array [
+      "int32",
+      "int32",
+    ],
+    "resultTypes": Array [
+      "int32",
+    ],
+  },
+  Object {
+    "argTypes": Array [],
+    "mnemonic": "print",
+    "opcode": "0x02",
+    "operandTypes": Array [
+      "int32",
+    ],
+    "resultTypes": Array [],
+  },
+  Object {
+    "argTypes": Array [
+      "int32",
+    ],
+    "mnemonic": "gstore",
+    "opcode": "0x03",
+    "operandTypes": Array [
+      "int32",
+    ],
+    "resultTypes": Array [],
+  },
+  Object {
+    "argTypes": Array [
+      "int32",
+    ],
+    "mnemonic": "gload",
+    "opcode": "0x04",
+    "operandTypes": Array [],
+    "resultTypes": Array [
+      "int32",
+    ],
+  },
+  Object {
+    "argTypes": Array [
+      "label",
+    ],
+    "mnemonic": "jmp",
+    "opcode": "0x05",
+    "operandTypes": Array [],
+    "resultTypes": Array [],
+  },
+  Object {
+    "argTypes": Array [],
+    "mnemonic": "halt",
+    "opcode": "0x06",
+    "operandTypes": Array [],
+    "resultTypes": Array [],
+  },
+  Object {
+    "argTypes": Array [
+      "label",
+    ],
+    "mnemonic": "jne",
+    "opcode": "0x07",
+    "operandTypes": Array [],
+    "resultTypes": Array [],
+  },
+  Object {
+    "argTypes": Array [],
+    "mnemonic": "eq",
+    "opcode": "0x08",
+    "operandTypes": Array [
+      "int32",
+      "int32",
+    ],
+    "resultTypes": Array [
+      "boolean",
+    ],
+  },
+  Object {
+    "argTypes": Array [],
+    "mnemonic": "ne",
+    "opcode": "0x09",
+    "operandTypes": Array [
+      "int32",
+      "int32",
+    ],
+    "resultTypes": Array [
+      "boolean",
+    ],
+  },
+  Object {
+    "argTypes": Array [],
+    "mnemonic": "lt",
+    "opcode": "0x0a",
+    "operandTypes": Array [
+      "int32",
+      "int32",
+    ],
+    "resultTypes": Array [
+      "boolean",
+    ],
+  },
+  Object {
+    "argTypes": Array [],
+    "mnemonic": "gt",
+    "opcode": "0x0b",
+    "operandTypes": Array [
+      "int32",
+      "int32",
+    ],
+    "resultTypes": Array [
+      "boolean",
+    ],
+  },
+  Object {
+    "argTypes": Array [],
+    "mnemonic": "lte",
+    "opcode": "0x0c",
+    "operandTypes": Array [
+      "int32",
+      "int32",
+    ],
+    "resultTypes": Array [
+      "boolean",
+    ],
+  },
+  Object {
+    "argTypes": Array [],
+    "mnemonic": "gte",
+    "opcode": "0x0d",
+    "operandTypes": Array [
+      "int32",
+      "int32",
+    ],
+    "resultTypes": Array [
+      "boolean",
+    ],
+  },
+]
+`;

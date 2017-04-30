@@ -1,6 +1,9 @@
-import { instruction } from "./types"
+import readInstructions from './parse-instructions'
+import { Instruction } from './types'
 
-export default function getInstructionByName(mnemonic: string) {
+const instructions: Instruction[] = readInstructions()
+
+export default function getInstructionByName (mnemonic: string) {
   const instruction = instructionsByMnemonic[mnemonic]
   if (instruction == null) {
     throw new Error(`Unknown instruction [${mnemonic}]`)
@@ -9,40 +12,19 @@ export default function getInstructionByName(mnemonic: string) {
   return instruction
 }
 
-// [mnemonic, argCount, returnCount]
-type instructionShorthand = [string, number, number]
-
-const instructions: instructionShorthand[] = [
-  ["iconst", 1, 0],
-  ["iadd", 0, 2],
-  ["print", 0, 0],
-  ["gstore", 1, 0],
-  ["gload", 1, 1],
-  ["jmp", 1, 0],
-  ["halt", 0, 0],
-  ["jne", 1, 0],
-  ["eq", 0, 1],
-  ["ne", 0, 1],
-  ["lt", 0, 1],
-  ["gt", 0, 1],
-  ["lte", 0, 1],
-  ["gte", 0, 1]
-]
-
 // Export mnemonic -> instruction map via getInstructionByName
 // so we can throw at band instructions at assemble time
-const instructionsByMnemonic: { [mnemonic:string]: instruction } = {}
+const instructionsByMnemonic: { [mnemonic: string]: Instruction } = {}
 
 // Export opcode -> mnemonic map directly to save a function call
 // at interpret time
-export const mnemonicsByOpcode: { [i:number]: string } = {}
+export const mnemonicsByOpcode: { [i: number]: string } = {}
 
 for (let i = 0; i < instructions.length; i ++) {
-  const [mnemonic, argCount, returnCount] = instructions[i]
-  instructionsByMnemonic[mnemonic] = { opcode: i, mnemonic, argCount, returnCount }
+  instructionsByMnemonic[instructions[i].mnemonic] = instructions[i]
 }
 
 for (let i = 0; i < instructions.length; i ++) {
-  const [mnemonic] = instructions[i]
+  const { mnemonic } = instructions[i]
   mnemonicsByOpcode[i] = mnemonic
 }

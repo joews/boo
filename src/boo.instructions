@@ -1,0 +1,16 @@
+# boo vm instruction set
+# initial hacked together opcodes. TODO: group logically.
+0x00 iconst (int32): () -> (int32)
+0x01 iadd (): (int32, int32) -> (int32)
+0x02 print (): (int32) -> ()
+0x03 gstore (int32): (int32) -> ()
+0x04 gload (int32): () -> (int32)
+0x05 jmp (label): () -> ()
+0x06 halt (): () -> ()
+0x07 jne (label): () -> ()
+0x08 eq (): (int32, int32) -> (boolean)
+0x09 ne (): (int32, int32) -> (boolean)
+0x0a lt (): (int32, int32) -> (boolean)
+0x0b gt (): (int32, int32) -> (boolean)
+0x0c lte (): (int32, int32) -> (boolean)
+0x0d gte (): (int32, int32) -> (boolean)

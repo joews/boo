@@ -43,12 +43,15 @@ function getCodeSize(ast: Ast) {
 
   ast.forEach(node => {
     if (node.kind === "instruction") {
-      const { argCount, returnCount } = getOpcodeByName(node.mnemonic)
-      codeSize = codeSize + argCount + 1
+      const { argTypes, operandTypes, resultTypes } = getOpcodeByName(node.mnemonic)
 
-      currentStackSize += argCount
+      codeSize += argTypes.length + 1
+      currentStackSize -= operandTypes.length
+      currentStackSize += resultTypes.length
+
+      // TODO assert that stack length is >- 0
       maxStackSize = Math.max(maxStackSize, currentStackSize)
-      currentStackSize -= returnCount
+
     } else if (node.kind === "header") {
       globalSize = node.globals
     }
@@ -68,13 +71,13 @@ function visit (node: AstNode): void {
 }
 
 function visitInstruction(node: InstructionNode) {
-  const { opcode, argCount } = getOpcodeByName(node.mnemonic)
+  const { opcode, argTypes } = getOpcodeByName(node.mnemonic)
 
   if (node.label) {
     resolveLabel(node)
   }
 
-  const buffer = new ArrayBuffer(1 + argCount)
+  const buffer = new ArrayBuffer(1 + argTypes.length)
   const view = new Uint8Array(buffer);
 
   view.set([opcode], 0)
