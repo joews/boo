@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "interpret.h"
+#include "opcodes.h"
 
 void execute(State* state) {
   while(state->ip < state->code_length) {
@@ -16,43 +17,43 @@ void step(State* state, int opcode) {
   int a, b;
 
   switch(opcode) {
-    case 0: // iconst
+    case ICONST:
       state->stack[++state->sp] = state->code[state->ip++];
       break;
-    case 1: // add
+    case IADD:
       a = state->stack[state->sp--];
       b = state->stack[state->sp--];
       state->stack[++state->sp] = a + b;
       break;
-    case 2: // printf
+    case PRINT:
       printf("%d\n", state->stack[state->sp--]);
       break;
-    case 8: // eq
+    case EQ:
       a = state->stack[state->sp--];
       b = state->stack[state->sp--];
       state->stack[++state->sp] = a == b;
       break;
-    case 9: // ne
+    case NE:
       a = state->stack[state->sp--];
       b = state->stack[state->sp--];
       state->stack[++state->sp] = a != b;
       break;
-    case 10: // lt
+    case LT:
       a = state->stack[state->sp--];
       b = state->stack[state->sp--];
       state->stack[++state->sp] = a < b;
       break;
-    case 11: // gt
+    case GT:
       a = state->stack[state->sp--];
       b = state->stack[state->sp--];
       state->stack[++state->sp] = a > b;
       break;
-    case 12: // lte
+    case LTE:
       a = state->stack[state->sp--];
       b = state->stack[state->sp--];
       state->stack[++state->sp] = a <= b;
       break;
-    case 13: // gte
+    case GTE:
       a = state->stack[state->sp--];
       b = state->stack[state->sp--];
       state->stack[++state->sp] = a >= b;

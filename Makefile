@@ -1,6 +1,6 @@
-C_SRC=./src/native/*.c
+C_SRC=./src/native/boo.c ./src/native/interpret.c
 TS_SRC=./src/**/*.ts
-C_TEST_SRC=./src/native/__tests__/*.c
+C_TEST_SRC=./src/native/__tests__/test-interpreter.c
 DIST=./dist
 EXECUTABLE=./dist/boo
 TEST_EXECUTABLE=./dist/boo-test
@@ -17,7 +17,7 @@ build_c: $(DIST) $(C_SRC)
 	$(CC) $(CFLAGS) $(C_SRC) -o $(EXECUTABLE)
 
 build_c_test: $(DIST) $(C_SRC) $(C_TEST_SRC)
-	$(CC) $(CFLAGS) $(C_SRC) $(C_TEST_SRC) -o $(TEST_EXECUTABLE)
+	$(CC) $(CFLAGS) -DUNIT_TESTS $(C_TEST_SRC) $(C_SRC) -o $(TEST_EXECUTABLE)
 
 build_ts: $(DIST) $(TS_SRC)
 	$(TSC)
