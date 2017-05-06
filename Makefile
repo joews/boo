@@ -11,7 +11,7 @@ TEST_EXECUTABLE=./dist/boo-test
 
 CC=gcc
 CFLAGS=-Wall
-LDFLAGS=-lm
+LDFLAGS=
 
 TSC=./node_modules/.bin/tsc
 JEST=./node_modules/.bin/jest
