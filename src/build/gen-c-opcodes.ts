@@ -1,7 +1,10 @@
-import readInstructions from '../../src/parse-instructions'
+import { writeFileSync } from 'fs'
+import readInstructions from '../parse-instructions'
 
 // TODO type definition
 const rev = require('git-rev-sync')
+
+const OUT_FILE = process.argv[2]
 
 //
 // Script to generate opcode constants for the
@@ -25,4 +28,4 @@ ${constants.join('\n')}
  **/
 `
 
-process.stdout.write(C_CODE)
+writeFileSync(OUT_FILE, C_CODE, 'utf8')

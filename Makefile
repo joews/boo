@@ -14,6 +14,7 @@ CFLAGS=-Wall
 LDFLAGS=
 
 TSC=./node_modules/.bin/tsc
+TSNODE=./node_modules/.bin/ts-node
 JEST=./node_modules/.bin/jest
 TSLINT=./node_modules/.bin/tslint
 
@@ -24,6 +25,11 @@ $(EXECUTABLE): $(C_OBJ)
 
 $(TEST_EXECUTABLE): ./src/native/interpret.o $(C_OBJ_TEST)
 	$(CC) -o $@ $^ $(LDFLAGS)
+
+./src/native/interpret.c: ./src/native/opcodes.h
+
+./src/native/opcodes.h: ./src/boo.instructions
+	$(TSNODE) ./src/build/gen-c-opcodes.ts $@
 
 build_ts: $(TS_SRC)
 	$(TSC)
