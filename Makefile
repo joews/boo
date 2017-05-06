@@ -1,36 +1,41 @@
-C_SRC=./src/native/boo.c ./src/native/interpret.c
+C_SRC=$(wildcard ./src/native/*.c)
+C_OBJ=$(C_SRC:.c=.o)
+
+C_SRC_TEST=$(wildcard ./src/native/__tests__/*.c)
+C_OBJ_TEST=$(C_SRC_TEST:.c=.o)
+
 TS_SRC=./src/**/*.ts
-C_TEST_SRC=./src/native/__tests__/test-interpreter.c
 DIST=./dist
-EXECUTABLE=./dist/boo
+EXECUTABLE=$(DIST)/boo
 TEST_EXECUTABLE=./dist/boo-test
 
 CC=gcc
 CFLAGS=-Wall
+LDFLAGS=-lm
+
 TSC=./node_modules/.bin/tsc
 JEST=./node_modules/.bin/jest
 TSLINT=./node_modules/.bin/tslint
 
-build: build_c build_ts
+build: build_ts $(EXECUTABLE)
 
-build_c: $(DIST) $(C_SRC)
-	$(CC) $(CFLAGS) $(C_SRC) -o $(EXECUTABLE)
+$(EXECUTABLE): $(C_OBJ)
+	$(CC) -o $@ $^ $(LDFLAGS)
 
-build_c_test: $(DIST) $(C_SRC) $(C_TEST_SRC)
-	$(CC) $(CFLAGS) -DUNIT_TESTS $(C_TEST_SRC) $(C_SRC) -o $(TEST_EXECUTABLE)
+$(TEST_EXECUTABLE): ./src/native/interpret.o $(C_OBJ_TEST)
+	$(CC) -o $@ $^ $(LDFLAGS)
 
-build_ts: $(DIST) $(TS_SRC)
+build_ts: $(TS_SRC)
 	$(TSC)
 
-watch: $(DIST) $(TS_SRC)
+watch: $(TS_SRC)
 	$(TSC) --watch
 
-$(DIST):
-	mkdir -p $(DIST)
+test:	$(TEST_EXECUTABLE)
+	$(TEST_EXECUTABLE)
+	$(JEST)
 
-test:	test_c test_ts
-
-test_c: build_c_test
+test_c: $(TEST_EXECUTABLE)
 	$(TEST_EXECUTABLE)
 
 test_ts:
@@ -40,6 +45,6 @@ lint: $(TS_SRC)
 	$(TSLINT) $(TS_SRC)
 
 clean:
-	rm -rf $(DIST)
+	rm -rf $(DIST)/* $(EXECUTABLE) $(C_OBJ)
 
-.PHONY: build dist test_c test_ts test clean
+.PHONY: build build_ts watch test test_c test_ts lint clean
