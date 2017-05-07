@@ -38,5 +38,9 @@ jspm_packages
 
 # boo
 /dist
+/build
 *.out
 *.o
+
+# vi
+*.sw[pon]
