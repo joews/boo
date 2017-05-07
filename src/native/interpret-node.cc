@@ -1,6 +1,10 @@
 // hello.cc
 #include <node.h>
 
+extern "C" {
+  #include "./interpret.h"
+}
+
 namespace boo {
 
 using v8::FunctionCallbackInfo;
@@ -10,6 +14,7 @@ using v8::Object;
 using v8::String;
 using v8::Value;
 using v8::Uint8Array;
+using v8::Integer;
 
 void Interpret(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
@@ -17,15 +22,22 @@ void Interpret(const FunctionCallbackInfo<Value>& args) {
   // TODO check call arity and arg types
   Local<Object> program = args[0]->ToObject(isolate);
   Local<Uint8Array> jsCode = program->Get(String::NewFromUtf8(isolate, "code")).As<Uint8Array>();
-  Local<Value> jsStackSize = program->Get(String::NewFromUtf8(isolate, "stackSize"));
+  Local<Integer> jsStackSize = program->Get(String::NewFromUtf8(isolate, "stackSize"))->ToInteger();
 
   void *jsCodeData = jsCode->Buffer()->GetContents().Data();
-  int8_t *code = static_cast<int8_t*>(jsCodeData);
+  uint8_t *code = static_cast<uint8_t*>(jsCodeData);
 
-  // check we can write to the JS typed array
-  for (int i = 0; i < jsCode->Length(); i ++) {
-    code[i] ++;
-  }
+  int64_t stackSize = jsStackSize->Value();
+
+  // FIXME public API should be a small subset of State
+  int stack[stackSize];
+  State *state = (State*)malloc(sizeof(state));
+  state->sp = -1;
+  state->ip = 0;
+  state->code_length = jsCode->Length();
+  state->code = code;
+  state->stack_length = stackSize;
+  state->stack = stack;
 
   args.GetReturnValue().Set(jsCode);
 }
