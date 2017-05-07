@@ -39,7 +39,13 @@ void Interpret(const FunctionCallbackInfo<Value>& args) {
   state->stack_length = stackSize;
   state->stack = stack;
 
-  args.GetReturnValue().Set(jsCode);
+  execute(state);
+
+  int result = state->stack[state->sp];
+  Local<Integer> jsResult = Integer::New(isolate, result);
+  free(state);
+
+  args.GetReturnValue().Set(jsResult);
 }
 
 void init(Local<Object> exports) {
