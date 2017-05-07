@@ -9,18 +9,25 @@ using v8::Local;
 using v8::Object;
 using v8::String;
 using v8::Value;
+using v8::Uint8Array;
 
 void Interpret(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
 
   // TODO check call arity and arg types
   Local<Object> program = args[0]->ToObject(isolate);
-  Local<Value> code = program->Get(String::NewFromUtf8(isolate, "code"));
-  Local<Value> stackSize = program->Get(String::NewFromUtf8(isolate, "stackSize"));
+  Local<Uint8Array> jsCode = program->Get(String::NewFromUtf8(isolate, "code")).As<Uint8Array>();
+  Local<Value> jsStackSize = program->Get(String::NewFromUtf8(isolate, "stackSize"));
 
-  // TODO do the thing
+  void *jsCodeData = jsCode->Buffer()->GetContents().Data();
+  int8_t *code = static_cast<int8_t*>(jsCodeData);
 
-  args.GetReturnValue().Set(code);
+  // check we can write to the JS typed array
+  for (int i = 0; i < jsCode->Length(); i ++) {
+    code[i] ++;
+  }
+
+  args.GetReturnValue().Set(jsCode);
 }
 
 void init(Local<Object> exports) {
