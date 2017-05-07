@@ -31,7 +31,7 @@ void Interpret(const FunctionCallbackInfo<Value>& args) {
 
   // FIXME public API should be a small subset of State
   int stack[stackSize];
-  State *state = (State*)malloc(sizeof(state));
+  State *state = (State*)malloc(sizeof(State));
   state->sp = -1;
   state->ip = 0;
   state->code_length = jsCode->Length();
