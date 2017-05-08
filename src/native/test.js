@@ -6,5 +6,5 @@ const PROGRAM = {
   globalSize: 0
 }
 
-const out = interpretNative(PROGRAM)
+const out = interpretNative({ code: PROGRAM.code, stackSize: 2 })
 console.log(out)

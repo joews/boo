@@ -9,6 +9,7 @@ namespace boo {
 
 using v8::FunctionCallbackInfo;
 using v8::Isolate;
+using v8::Exception;
 using v8::Local;
 using v8::Object;
 using v8::String;
@@ -19,17 +20,40 @@ using v8::Integer;
 void Interpret(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
 
-  // TODO check call arity and arg types
+  if (args.Length() != 1 || !args[0]->IsObject()) {
+    isolate->ThrowException(Exception::TypeError(
+        String::NewFromUtf8(isolate, "interpret expects a single Program argument")));
+    return;
+  }
+
+	const Local<String> CODE = String::NewFromUtf8(isolate, "code");
+	const Local<String> STACK_SIZE = String::NewFromUtf8(isolate, "stackSize");
   Local<Object> program = args[0]->ToObject(isolate);
-  Local<Uint8Array> jsCode = program->Get(String::NewFromUtf8(isolate, "code")).As<Uint8Array>();
-  Local<Integer> jsStackSize = program->Get(String::NewFromUtf8(isolate, "stackSize"))->ToInteger();
+
+  if (!program->Has(CODE) || !program->Has(STACK_SIZE)) {
+    isolate->ThrowException(Exception::TypeError(
+        String::NewFromUtf8(isolate, "interpret expects a single Program argument")));
+    return;
+	}
+
+	Local<Value> jsCodeValue = program->Get(CODE);
+	Local<Value> jsStackSizeValue = program->Get(STACK_SIZE);
+
+  if (!jsCodeValue->IsUint8Array() || !jsStackSizeValue->IsNumber()) {
+    isolate->ThrowException(Exception::TypeError(
+        String::NewFromUtf8(isolate, "interpret expects a single Program argument")));
+    return;
+	}
+
+  Local<Uint8Array> jsCode = jsCodeValue.As<Uint8Array>();
+  Local<Integer> jsStackSize = jsStackSizeValue->ToInteger();
 
   void *jsCodeData = jsCode->Buffer()->GetContents().Data();
   uint8_t *code = static_cast<uint8_t*>(jsCodeData);
 
   int64_t stackSize = jsStackSize->Value();
 
-  // FIXME public API should be a small subset of State
+  // TODO public API should be a small subset of State
   int stack[stackSize];
   State *state = (State*)malloc(sizeof(State));
   state->sp = -1;
