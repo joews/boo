@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/jwhitfieldseed/boo#readme",
   "dependencies": {
+    "bindings": "^1.2.1",
     "minimist": "^1.2.0",
     "pegjs": "^0.10.0"
   },
