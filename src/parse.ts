@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs'
 import { join } from 'path'
 import { generate } from 'pegjs'
-import { Ast } from "./types"
+import { Ast } from './types'
 
 const parserSource = readFileSync(join(__dirname, 'boo.pegjs'), 'utf8')
 const parser = generate(parserSource)

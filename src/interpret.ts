@@ -1,5 +1,5 @@
-import { Program } from "./types"
-import { mnemonicsByOpcode } from "./instructions"
+import { Program } from './types'
+import { mnemonicsByOpcode } from './instructions'
 
 ////// TODO instance state
 
@@ -18,11 +18,11 @@ let globals: Uint8Array
 let shouldTrace: boolean
 ////// TODO end instance state
 
-interface options {
+interface Options {
   trace: boolean
 }
 
-export default function interpret(compiledProgram: Program, options: options = { trace: false }): number {
+export default function interpret (compiledProgram: Program, options: Options = { trace: false }): number {
   code = compiledProgram.code
   ip = 0
   sp = -1
@@ -45,7 +45,7 @@ export default function interpret(compiledProgram: Program, options: options = {
   return operandStack[sp]
 }
 
-function visit(): void {
+function visit (): void {
   const opcode = code[ip++]
   const mnemonic = mnemonicsByOpcode[opcode]
 
@@ -54,59 +54,59 @@ function visit(): void {
   }
 
   switch (mnemonic) {
-    case "gload":
+    case 'gload':
       return push(globals[code[ip++]])
-    case "gstore":
+    case 'gstore':
       globals[code[ip++]] = pop()
       break
-    case "iconst":
+    case 'iconst':
       return push(code[ip++])
-    case "iadd":
+    case 'iadd':
       return push(pop() + pop())
-    case "print":
+    case 'print':
       return console.log(pop())
-    case "jmp":
+    case 'jmp':
       ip = code[ip++]
       break
-    case "halt":
+    case 'halt':
       ip = code.length
       break
-    case "jne":
+    case 'jne':
       const label = code[ip++]
       if (pop() !== pop()) {
         ip = label
-      } else {}
+      }
       break
-    case "eq":
+    case 'eq':
       return push(+(pop() === pop()))
-    case "ne":
+    case 'ne':
       return push(+(pop() !== pop()))
-    case "lt":
+    case 'lt':
       return push(+(pop() < pop()))
-    case "gt":
+    case 'gt':
       return push(+(pop() > pop()))
-    case "lte":
+    case 'lte':
       return push(+(pop() <= pop()))
-    case "gte":
+    case 'gte':
       return push(+(pop() >= pop()))
     default:
-      throw new Error("bad opcode " + mnemonic)
+      throw new Error('bad opcode ' + mnemonic)
   }
 }
 
-function push(byte: number): void {
+function push (byte: number): void {
   operandStack[++sp] = byte & 0xff
 }
 
-function pop(): number {
+function pop (): number {
   return operandStack[sp--]
 }
 
-function traceStart() {
+function traceStart () {
   console.log(`TRACE NEW PROGRAM with code size: ${code.length}, stack size: ${operandStack.length}, globals: ${globals.length}`)
 }
 
-function trace(opcode: number, mnemonic: string) {
+function trace (opcode: number, mnemonic: string) {
   // show the defined region of the stack only
   let stack = []
   for (let i = 0; i <= sp; i ++) {

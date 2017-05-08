@@ -1,22 +1,22 @@
-import { Ast, AstNode, InstructionNode, Program } from "./types"
-import getOpcodeByName from "./instructions"
+import { Ast, AstNode, InstructionNode, Program } from './types'
+import getOpcodeByName from './instructions'
 
 // TODO instance state
 let code: Uint8Array
 let ip: number
 
 // map labels to their decoded code address
-let labels: { [label:string]: number }
+let labels: { [label: string]: number }
 
 // instructions can refer to labels that have not yet been defined.
 // keep a map of labels to instructions that are waiting for the label's
 // code address so that the address can be filled in ("backpatched") when
 // we reach its declaration.
-let labelForwardRefs: { [label:string]: number[] }
+let labelForwardRefs: { [label: string]: number[] }
 
 // AST pass to compile the given AST to machine code
 export default function compile (ast: Ast): Program {
-  ip = 0;
+  ip = 0
 
   let [codeSize, stackSize, globalSize] = getCodeSize(ast)
   const codeBuffer = new ArrayBuffer(codeSize)
@@ -35,14 +35,14 @@ export default function compile (ast: Ast): Program {
 }
 
 // AST pass to compute the size of the compiled code
-function getCodeSize(ast: Ast) {
+function getCodeSize (ast: Ast) {
   let codeSize = 0
   let globalSize = 0
   let currentStackSize = 0
   let maxStackSize = 0
 
   ast.forEach(node => {
-    if (node.kind === "instruction") {
+    if (node.kind === 'instruction') {
       const { argTypes, operandTypes, resultTypes } = getOpcodeByName(node.mnemonic)
 
       codeSize += argTypes.length + 1
@@ -52,7 +52,7 @@ function getCodeSize(ast: Ast) {
       // TODO assert that stack length is >- 0
       maxStackSize = Math.max(maxStackSize, currentStackSize)
 
-    } else if (node.kind === "header") {
+    } else if (node.kind === 'header') {
       globalSize = node.globals
     }
   })
@@ -63,14 +63,14 @@ function getCodeSize(ast: Ast) {
 // AST visitor to return machine code for the given AST node
 function visit (node: AstNode): void {
   switch (node.kind) {
-    case "instruction":
+    case 'instruction':
       return visitInstruction(node)
-    case "header":
+    case 'header':
       break
   }
 }
 
-function visitInstruction(node: InstructionNode) {
+function visitInstruction (node: InstructionNode) {
   const { opcode, argTypes } = getOpcodeByName(node.mnemonic)
 
   if (node.label) {
@@ -78,7 +78,7 @@ function visitInstruction(node: InstructionNode) {
   }
 
   const buffer = new ArrayBuffer(1 + argTypes.length)
-  const view = new Uint8Array(buffer);
+  const view = new Uint8Array(buffer)
 
   view.set([opcode], 0)
 
@@ -96,11 +96,11 @@ function visitInstruction(node: InstructionNode) {
 // byte input: identity
 // string/float/function input: TODO constant pool
 // label input: map to label
-function mapOperands(node: InstructionNode) {
+function mapOperands (node: InstructionNode) {
   // TODO somehow switch on operand type, not instruction
   switch (node.mnemonic) {
-    case "jmp":
-    case "jne":
+    case 'jmp':
+    case 'jne':
       return getLabelAddress(node.operands[0])
     default:
       return node.operands
@@ -110,7 +110,7 @@ function mapOperands(node: InstructionNode) {
 // Get the code address that `label` resolves to. If `label` has not yet been
 // defined, add the current ip to the list of instructions to backpatch when
 // we reach the label declaration and return a sentinel.
-function getLabelAddress(label: string) {
+function getLabelAddress (label: string) {
   const address = labels[label]
   if (address) {
     return [labels[label]]
@@ -125,7 +125,7 @@ function getLabelAddress(label: string) {
 // Resolve the node's label to its code address (the current ip)
 // If any instructions have referred to this label before now,
 // backpatch their references
-function resolveLabel(node: InstructionNode) {
+function resolveLabel (node: InstructionNode) {
   if (node.label) {
     labels[node.label] = ip
 

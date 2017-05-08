@@ -14,10 +14,10 @@ function testFails (source: string) {
   })
 }
 
-testParse("iconst 3")
+testParse('iconst 3')
 
 // a program needs at least one instruction
-testFails(".globals 3")
+testFails('.globals 3')
 
 testParse(`
 

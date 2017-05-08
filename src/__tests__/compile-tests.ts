@@ -12,7 +12,7 @@ function testCompile (source: string) {
   })
 }
 
-testCompile("iconst 3")
+testCompile('iconst 3')
 
 testCompile(`
 .globals 3

@@ -6,12 +6,12 @@ export type AstNode
   | InstructionNode
 
 export type HeaderNode = {
-  kind: "header",
+  kind: 'header',
   globals: number
 }
 
 export type InstructionNode = {
-  kind: "instruction",
+  kind: 'instruction',
   mnemonic: string,
   operands: any[],
   label?: string
