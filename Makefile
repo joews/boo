@@ -46,14 +46,12 @@ build_addon: ./build/Makefile ./build/Release/interpret.node
 watch: $(TS_SRC)
 	$(TSC) --watch
 
-test:	$(TEST_EXECUTABLE)
-	$(TEST_EXECUTABLE)
-	$(JEST)
+test:	test_c test_ts
 
 test_c: $(TEST_EXECUTABLE)
 	$(TEST_EXECUTABLE)
 
-test_ts:
+test_ts: build_addon
 	$(JEST)
 
 lint: $(TS_SRC)
@@ -62,6 +60,6 @@ lint: $(TS_SRC)
 clean:
 	rm -rf $(DIST)/* $(EXECUTABLE) $(C_OBJ) $(NODE_ADDON_BUILD)
 
-.PHONY: build build_ts watch test test_c test_ts lint clean
+.PHONY: build build_ts build_addon watch test test_c test_ts lint clean
 .SUFFIXES:
 .SUFFIXES: .c .o .h
