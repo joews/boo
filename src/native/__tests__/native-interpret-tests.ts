@@ -1,6 +1,6 @@
 import interpretNative from '..'
 
-test('a valid program', () => {
+test('interpretNative interprets a valid program', () => {
   const PROGRAM = {
     code: new Uint8Array([0, 3, 0, 5, 0, 13, 1, 1]),
     stackSize: 2,

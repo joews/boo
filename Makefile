@@ -13,7 +13,6 @@ TEST_EXECUTABLE=./dist/boo-test
 CC=gcc
 CFLAGS=-Wall
 LDFLAGS=
-CXX=
 
 TSC=./node_modules/.bin/tsc
 TSNODE=./node_modules/.bin/ts-node

@@ -1,4 +1,3 @@
-// hello.cc
 #include <node.h>
 
 extern "C" {
@@ -26,15 +25,15 @@ void Interpret(const FunctionCallbackInfo<Value>& args) {
     return;
   }
 
-	const Local<String> CODE = String::NewFromUtf8(isolate, "code");
-	const Local<String> STACK_SIZE = String::NewFromUtf8(isolate, "stackSize");
+  const Local<String> CODE = String::NewFromUtf8(isolate, "code");
+  const Local<String> STACK_SIZE = String::NewFromUtf8(isolate, "stackSize");
   Local<Object> program = args[0]->ToObject(isolate);
 
   if (!program->Has(CODE) || !program->Has(STACK_SIZE)) {
     isolate->ThrowException(Exception::TypeError(
         String::NewFromUtf8(isolate, "interpret expects a single Program argument")));
     return;
-	}
+  }
 
 	Local<Value> jsCodeValue = program->Get(CODE);
 	Local<Value> jsStackSizeValue = program->Get(STACK_SIZE);
@@ -43,7 +42,7 @@ void Interpret(const FunctionCallbackInfo<Value>& args) {
     isolate->ThrowException(Exception::TypeError(
         String::NewFromUtf8(isolate, "interpret expects a single Program argument")));
     return;
-	}
+  }
 
   Local<Uint8Array> jsCode = jsCodeValue.As<Uint8Array>();
   Local<Integer> jsStackSize = jsStackSizeValue->ToInteger();
