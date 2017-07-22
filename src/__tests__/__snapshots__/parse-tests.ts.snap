@@ -58,7 +58,7 @@ Array [
 ]
 `;
 
-exports[`.globals 3 1`] = `"Expected [0-9], [\\\\r\\\\n], or [a-z] but end of input found."`;
+exports[`.globals 3 1`] = `"Expected [0-9], [\\\\r\\\\n], [a-z0-9_], or [a-z] but end of input found."`;
 
 exports[`iconst 3 1`] = `
 Array [

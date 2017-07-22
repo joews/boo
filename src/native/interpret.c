@@ -17,43 +17,43 @@ void step(State* state, int opcode) {
   int a, b;
 
   switch(opcode) {
-    case ICONST:
+    case CONST_I32:
       state->stack[++state->sp] = state->code[state->ip++];
       break;
-    case IADD:
+    case ADD_I32:
       a = state->stack[state->sp--];
       b = state->stack[state->sp--];
       state->stack[++state->sp] = a + b;
       break;
-    case PRINT:
+    case PRINT_I32:
       printf("%d\n", state->stack[state->sp--]);
       break;
-    case EQ:
+    case EQ_I32:
       a = state->stack[state->sp--];
       b = state->stack[state->sp--];
       state->stack[++state->sp] = a == b;
       break;
-    case NE:
+    case NE_I32:
       a = state->stack[state->sp--];
       b = state->stack[state->sp--];
       state->stack[++state->sp] = a != b;
       break;
-    case LT:
+    case LT_I32:
       a = state->stack[state->sp--];
       b = state->stack[state->sp--];
       state->stack[++state->sp] = a < b;
       break;
-    case GT:
+    case GT_I32:
       a = state->stack[state->sp--];
       b = state->stack[state->sp--];
       state->stack[++state->sp] = a > b;
       break;
-    case LTE:
+    case LTE_I32:
       a = state->stack[state->sp--];
       b = state->stack[state->sp--];
       state->stack[++state->sp] = a <= b;
       break;
-    case GTE:
+    case GTE_I32:
       a = state->stack[state->sp--];
       b = state->stack[state->sp--];
       state->stack[++state->sp] = a >= b;

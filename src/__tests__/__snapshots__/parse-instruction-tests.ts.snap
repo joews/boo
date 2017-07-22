@@ -49,79 +49,193 @@ Array [
 exports[`read all instructions 1`] = `
 Array [
   Object {
-    "argTypes": Array [
-      "int32",
-    ],
-    "mnemonic": "iconst",
+    "argTypes": Array [],
+    "mnemonic": "nop",
     "opcode": 0,
     "opcodeHex": "0x00",
     "operandTypes": Array [],
-    "resultTypes": Array [
-      "int32",
-    ],
+    "resultTypes": Array [],
   },
   Object {
-    "argTypes": Array [],
-    "mnemonic": "iadd",
+    "argTypes": Array [
+      "int32",
+    ],
+    "mnemonic": "const_i32",
     "opcode": 1,
     "opcodeHex": "0x01",
-    "operandTypes": Array [
-      "int32",
-      "int32",
-    ],
-    "resultTypes": Array [
-      "int32",
-    ],
-  },
-  Object {
-    "argTypes": Array [],
-    "mnemonic": "print",
-    "opcode": 2,
-    "opcodeHex": "0x02",
-    "operandTypes": Array [
-      "int32",
-    ],
-    "resultTypes": Array [],
-  },
-  Object {
-    "argTypes": Array [
-      "int32",
-    ],
-    "mnemonic": "gstore",
-    "opcode": 3,
-    "opcodeHex": "0x03",
-    "operandTypes": Array [
-      "int32",
-    ],
-    "resultTypes": Array [],
-  },
-  Object {
-    "argTypes": Array [
-      "int32",
-    ],
-    "mnemonic": "gload",
-    "opcode": 4,
-    "opcodeHex": "0x04",
     "operandTypes": Array [],
     "resultTypes": Array [
       "int32",
     ],
+  },
+  Object {
+    "argTypes": Array [],
+    "mnemonic": "add_i32",
+    "opcode": 16,
+    "opcodeHex": "0x10",
+    "operandTypes": Array [
+      "int32",
+      "int32",
+    ],
+    "resultTypes": Array [
+      "int32",
+    ],
+  },
+  Object {
+    "argTypes": Array [],
+    "mnemonic": "sub_i32",
+    "opcode": 17,
+    "opcodeHex": "0x11",
+    "operandTypes": Array [
+      "int32",
+      "int32",
+    ],
+    "resultTypes": Array [
+      "int32",
+    ],
+  },
+  Object {
+    "argTypes": Array [],
+    "mnemonic": "mul_i32",
+    "opcode": 18,
+    "opcodeHex": "0x12",
+    "operandTypes": Array [
+      "int32",
+      "int32",
+    ],
+    "resultTypes": Array [
+      "int32",
+    ],
+  },
+  Object {
+    "argTypes": Array [],
+    "mnemonic": "div_i32",
+    "opcode": 19,
+    "opcodeHex": "0x13",
+    "operandTypes": Array [
+      "int32",
+      "int32",
+    ],
+    "resultTypes": Array [
+      "int32",
+    ],
+  },
+  Object {
+    "argTypes": Array [],
+    "mnemonic": "mod_i32",
+    "opcode": 20,
+    "opcodeHex": "0x14",
+    "operandTypes": Array [
+      "int32",
+      "int32",
+    ],
+    "resultTypes": Array [
+      "int32",
+    ],
+  },
+  Object {
+    "argTypes": Array [],
+    "mnemonic": "eq_i32",
+    "opcode": 48,
+    "opcodeHex": "0x30",
+    "operandTypes": Array [
+      "int32",
+      "int32",
+    ],
+    "resultTypes": Array [
+      "boolean",
+    ],
+  },
+  Object {
+    "argTypes": Array [],
+    "mnemonic": "ne_i32",
+    "opcode": 49,
+    "opcodeHex": "0x31",
+    "operandTypes": Array [
+      "int32",
+      "int32",
+    ],
+    "resultTypes": Array [
+      "boolean",
+    ],
+  },
+  Object {
+    "argTypes": Array [],
+    "mnemonic": "lt_i32",
+    "opcode": 50,
+    "opcodeHex": "0x32",
+    "operandTypes": Array [
+      "int32",
+      "int32",
+    ],
+    "resultTypes": Array [
+      "boolean",
+    ],
+  },
+  Object {
+    "argTypes": Array [],
+    "mnemonic": "gt_i32",
+    "opcode": 51,
+    "opcodeHex": "0x33",
+    "operandTypes": Array [
+      "int32",
+      "int32",
+    ],
+    "resultTypes": Array [
+      "boolean",
+    ],
+  },
+  Object {
+    "argTypes": Array [],
+    "mnemonic": "lte_i32",
+    "opcode": 52,
+    "opcodeHex": "0x34",
+    "operandTypes": Array [
+      "int32",
+      "int32",
+    ],
+    "resultTypes": Array [
+      "boolean",
+    ],
+  },
+  Object {
+    "argTypes": Array [],
+    "mnemonic": "gte_i32",
+    "opcode": 53,
+    "opcodeHex": "0x35",
+    "operandTypes": Array [
+      "int32",
+      "int32",
+    ],
+    "resultTypes": Array [
+      "boolean",
+    ],
+  },
+  Object {
+    "argTypes": Array [],
+    "mnemonic": "halt",
+    "opcode": 80,
+    "opcodeHex": "0x50",
+    "operandTypes": Array [],
+    "resultTypes": Array [],
+  },
+  Object {
+    "argTypes": Array [
+      "label",
+    ],
+    "mnemonic": "call",
+    "opcode": 81,
+    "opcodeHex": "0x51",
+    "operandTypes": Array [],
+    "resultTypes": Array [],
   },
   Object {
     "argTypes": Array [
       "label",
     ],
     "mnemonic": "jmp",
-    "opcode": 5,
-    "opcodeHex": "0x05",
-    "operandTypes": Array [],
-    "resultTypes": Array [],
-  },
-  Object {
-    "argTypes": Array [],
-    "mnemonic": "halt",
-    "opcode": 6,
-    "opcodeHex": "0x06",
+    "opcode": 82,
+    "opcodeHex": "0x52",
     "operandTypes": Array [],
     "resultTypes": Array [],
   },
@@ -129,89 +243,55 @@ Array [
     "argTypes": Array [
       "label",
     ],
-    "mnemonic": "jne",
-    "opcode": 7,
-    "opcodeHex": "0x07",
+    "mnemonic": "jmp_f",
+    "opcode": 84,
+    "opcodeHex": "0x54",
     "operandTypes": Array [],
     "resultTypes": Array [],
   },
   Object {
-    "argTypes": Array [],
-    "mnemonic": "eq",
-    "opcode": 8,
-    "opcodeHex": "0x08",
-    "operandTypes": Array [
-      "int32",
+    "argTypes": Array [
+      "label",
+    ],
+    "mnemonic": "jne_i32",
+    "opcode": 85,
+    "opcodeHex": "0x55",
+    "operandTypes": Array [],
+    "resultTypes": Array [],
+  },
+  Object {
+    "argTypes": Array [
       "int32",
     ],
+    "mnemonic": "store_g_i32",
+    "opcode": 96,
+    "opcodeHex": "0x60",
+    "operandTypes": Array [
+      "int32",
+    ],
+    "resultTypes": Array [],
+  },
+  Object {
+    "argTypes": Array [
+      "int32",
+    ],
+    "mnemonic": "load_g_i32",
+    "opcode": 97,
+    "opcodeHex": "0x61",
+    "operandTypes": Array [],
     "resultTypes": Array [
-      "boolean",
+      "int32",
     ],
   },
   Object {
     "argTypes": Array [],
-    "mnemonic": "ne",
-    "opcode": 9,
-    "opcodeHex": "0x09",
+    "mnemonic": "print_i32",
+    "opcode": 112,
+    "opcodeHex": "0x70",
     "operandTypes": Array [
       "int32",
-      "int32",
     ],
-    "resultTypes": Array [
-      "boolean",
-    ],
-  },
-  Object {
-    "argTypes": Array [],
-    "mnemonic": "lt",
-    "opcode": 10,
-    "opcodeHex": "0x0a",
-    "operandTypes": Array [
-      "int32",
-      "int32",
-    ],
-    "resultTypes": Array [
-      "boolean",
-    ],
-  },
-  Object {
-    "argTypes": Array [],
-    "mnemonic": "gt",
-    "opcode": 11,
-    "opcodeHex": "0x0b",
-    "operandTypes": Array [
-      "int32",
-      "int32",
-    ],
-    "resultTypes": Array [
-      "boolean",
-    ],
-  },
-  Object {
-    "argTypes": Array [],
-    "mnemonic": "lte",
-    "opcode": 12,
-    "opcodeHex": "0x0c",
-    "operandTypes": Array [
-      "int32",
-      "int32",
-    ],
-    "resultTypes": Array [
-      "boolean",
-    ],
-  },
-  Object {
-    "argTypes": Array [],
-    "mnemonic": "gte",
-    "opcode": 13,
-    "opcodeHex": "0x0d",
-    "operandTypes": Array [
-      "int32",
-      "int32",
-    ],
-    "resultTypes": Array [
-      "boolean",
-    ],
+    "resultTypes": Array [],
   },
 ]
 `;

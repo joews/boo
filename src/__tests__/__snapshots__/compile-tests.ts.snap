@@ -2,19 +2,19 @@
 
 exports[`
 .globals 3
-iconst 3
-iconst 5
-iadd
-print
+const_i32 3
+const_i32 5
+add_i32
+print_i32
  1`] = `
 Object {
   "code": Uint8Array [
-    0,
-    3,
-    0,
-    5,
     1,
-    2,
+    3,
+    1,
+    5,
+    16,
+    112,
   ],
   "globalSize": 3,
   "stackSize": 2,
@@ -22,22 +22,26 @@ Object {
 `;
 
 exports[`
-first: iconst 1
-print
-second: iconst 2
-third: iconst 3
-iadd
+const_i32 1
+jmp skip
+const_i32 2
+add_i32
+skip:
+  const_i32 3
+add_i32
  1`] = `
 Object {
   "code": Uint8Array [
-    0,
+    1,
+    1,
+    82,
+    7,
     1,
     2,
-    0,
-    2,
-    0,
+    16,
+    1,
     3,
-    1,
+    16,
   ],
   "globalSize": 0,
   "stackSize": 2,
@@ -45,36 +49,32 @@ Object {
 `;
 
 exports[`
-iconst 1
-jmp skip
-iconst 2
-iadd
-skip:
-  iconst 3
-iadd
+first: const_i32 1
+print_i32
+second: const_i32 2
+third: const_i32 3
+add_i32
  1`] = `
 Object {
   "code": Uint8Array [
-    0,
     1,
-    5,
-    7,
-    0,
+    1,
+    112,
+    1,
     2,
     1,
-    0,
     3,
-    1,
+    16,
   ],
   "globalSize": 0,
   "stackSize": 2,
 }
 `;
 
-exports[`iconst 3 1`] = `
+exports[`const_i32 3 1`] = `
 Object {
   "code": Uint8Array [
-    0,
+    1,
     3,
   ],
   "globalSize": 0,
