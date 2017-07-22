@@ -5,7 +5,8 @@ Array [
   Object {
     "argTypes": Array [],
     "mnemonic": "noop",
-    "opcode": "0x00",
+    "opcode": 0,
+    "opcodeHex": "0x00",
     "operandTypes": Array [],
     "resultTypes": Array [],
   },
@@ -17,7 +18,8 @@ Array [
   Object {
     "argTypes": Array [],
     "mnemonic": "iadd",
-    "opcode": "0x10",
+    "opcode": 16,
+    "opcodeHex": "0x10",
     "operandTypes": Array [
       "int32",
       "int32",
@@ -36,7 +38,8 @@ Array [
       "label",
     ],
     "mnemonic": "jmp",
-    "opcode": "0x20",
+    "opcode": 32,
+    "opcodeHex": "0x20",
     "operandTypes": Array [],
     "resultTypes": Array [],
   },
@@ -50,7 +53,8 @@ Array [
       "int32",
     ],
     "mnemonic": "iconst",
-    "opcode": "0x00",
+    "opcode": 0,
+    "opcodeHex": "0x00",
     "operandTypes": Array [],
     "resultTypes": Array [
       "int32",
@@ -59,7 +63,8 @@ Array [
   Object {
     "argTypes": Array [],
     "mnemonic": "iadd",
-    "opcode": "0x01",
+    "opcode": 1,
+    "opcodeHex": "0x01",
     "operandTypes": Array [
       "int32",
       "int32",
@@ -71,7 +76,8 @@ Array [
   Object {
     "argTypes": Array [],
     "mnemonic": "print",
-    "opcode": "0x02",
+    "opcode": 2,
+    "opcodeHex": "0x02",
     "operandTypes": Array [
       "int32",
     ],
@@ -82,7 +88,8 @@ Array [
       "int32",
     ],
     "mnemonic": "gstore",
-    "opcode": "0x03",
+    "opcode": 3,
+    "opcodeHex": "0x03",
     "operandTypes": Array [
       "int32",
     ],
@@ -93,7 +100,8 @@ Array [
       "int32",
     ],
     "mnemonic": "gload",
-    "opcode": "0x04",
+    "opcode": 4,
+    "opcodeHex": "0x04",
     "operandTypes": Array [],
     "resultTypes": Array [
       "int32",
@@ -104,14 +112,16 @@ Array [
       "label",
     ],
     "mnemonic": "jmp",
-    "opcode": "0x05",
+    "opcode": 5,
+    "opcodeHex": "0x05",
     "operandTypes": Array [],
     "resultTypes": Array [],
   },
   Object {
     "argTypes": Array [],
     "mnemonic": "halt",
-    "opcode": "0x06",
+    "opcode": 6,
+    "opcodeHex": "0x06",
     "operandTypes": Array [],
     "resultTypes": Array [],
   },
@@ -120,14 +130,16 @@ Array [
       "label",
     ],
     "mnemonic": "jne",
-    "opcode": "0x07",
+    "opcode": 7,
+    "opcodeHex": "0x07",
     "operandTypes": Array [],
     "resultTypes": Array [],
   },
   Object {
     "argTypes": Array [],
     "mnemonic": "eq",
-    "opcode": "0x08",
+    "opcode": 8,
+    "opcodeHex": "0x08",
     "operandTypes": Array [
       "int32",
       "int32",
@@ -139,7 +151,8 @@ Array [
   Object {
     "argTypes": Array [],
     "mnemonic": "ne",
-    "opcode": "0x09",
+    "opcode": 9,
+    "opcodeHex": "0x09",
     "operandTypes": Array [
       "int32",
       "int32",
@@ -151,7 +164,8 @@ Array [
   Object {
     "argTypes": Array [],
     "mnemonic": "lt",
-    "opcode": "0x0a",
+    "opcode": 10,
+    "opcodeHex": "0x0a",
     "operandTypes": Array [
       "int32",
       "int32",
@@ -163,7 +177,8 @@ Array [
   Object {
     "argTypes": Array [],
     "mnemonic": "gt",
-    "opcode": "0x0b",
+    "opcode": 11,
+    "opcodeHex": "0x0b",
     "operandTypes": Array [
       "int32",
       "int32",
@@ -175,7 +190,8 @@ Array [
   Object {
     "argTypes": Array [],
     "mnemonic": "lte",
-    "opcode": "0x0c",
+    "opcode": 12,
+    "opcodeHex": "0x0c",
     "operandTypes": Array [
       "int32",
       "int32",
@@ -187,7 +203,8 @@ Array [
   Object {
     "argTypes": Array [],
     "mnemonic": "gte",
-    "opcode": "0x0d",
+    "opcode": 13,
+    "opcodeHex": "0x0d",
     "operandTypes": Array [
       "int32",
       "int32",

@@ -4,8 +4,9 @@ instructions = space* head:instruction tail:(space+ o:instruction { return o })*
   return [head, ...tail];
 }
 
-instruction = opcode:opcode _ mnemonic:mnemonic _ argTypes:type_list ":" _ operandTypes:type_list _ "->" _ resultTypes:type_list {
-  return { opcode, mnemonic, argTypes, operandTypes, resultTypes }
+instruction = opcodeHex:opcode _ mnemonic:mnemonic _ argTypes:type_list ":" _ operandTypes:type_list _ "->" _ resultTypes:type_list {
+  const opcode = parseInt(opcodeHex, 16);
+  return { opcodeHex, opcode, mnemonic, argTypes, operandTypes, resultTypes }
 }
 
 opcode = "0x" [0-9a-f][0-9a-f] {
