@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jwhitfieldseed/peach.git"
+    "url": "git+https://github.com/joews/peach.git"
   },
   "keywords": [
     "peach",
@@ -20,9 +20,9 @@
   "author": "Joe Whitfield-Seed <joeseed86@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jwhitfieldseed/boo/issues"
+    "url": "https://github.com/joews/boo/issues"
   },
-  "homepage": "https://github.com/jwhitfieldseed/boo#readme",
+  "homepage": "https://github.com/joews/boo#readme",
   "dependencies": {
     "bindings": "^1.2.1",
     "minimist": "^1.2.0",
