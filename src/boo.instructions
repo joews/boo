@@ -1,16 +1,44 @@
 # boo vm instruction set
 # initial hacked together opcodes. TODO: group logically.
-0x00 iconst (int32): () -> (int32)
-0x01 iadd (): (int32, int32) -> (int32)
-0x02 print (): (int32) -> ()
-0x03 gstore (int32): (int32) -> ()
-0x04 gload (int32): () -> (int32)
-0x05 jmp (label): () -> ()
-0x06 halt (): () -> ()
-0x07 jne (label): () -> ()
-0x08 eq (): (int32, int32) -> (boolean)
-0x09 ne (): (int32, int32) -> (boolean)
-0x0a lt (): (int32, int32) -> (boolean)
-0x0b gt (): (int32, int32) -> (boolean)
-0x0c lte (): (int32, int32) -> (boolean)
-0x0d gte (): (int32, int32) -> (boolean)
+
+# noop
+0x00 nop (): () -> ()
+
+# 0x0x constants
+0x01 const_i32 (int32): () -> (int32)
+
+# 0x1x arithmetic
+0x10 add_i32 (): (int32, int32) -> (int32)
+0x11 sub_i32 (): (int32, int32) -> (int32)
+0x12 mul_i32 (): (int32, int32) -> (int32)
+0x13 div_i32 (): (int32, int32) -> (int32)
+0x14 mod_i32 (): (int32, int32) -> (int32)
+
+# 0x2x logic
+
+# 0x3x comparison
+0x30 eq_i32 (): (int32, int32) -> (boolean)
+0x31 ne_i32 (): (int32, int32) -> (boolean)
+0x32 lt_i32 (): (int32, int32) -> (boolean)
+0x33 gt_i32 (): (int32, int32) -> (boolean)
+0x34 lte_i32 (): (int32, int32) -> (boolean)
+0x35 gte_i32 (): (int32, int32) -> (boolean)
+
+# 0x4x comparison
+
+# 0x5x flow control
+0x50 halt (): () -> ()
+0x51 call (label): () -> ()
+0x52 jmp (label): () -> ()
+0x54 jmp_f (label): () -> ()
+
+# deprecated
+0x55 jne_i32 (label): () -> ()
+
+# 0x6x variables
+0x60 store_g_i32 (int32): (int32) -> ()
+0x61 load_g_i32 (int32): () -> (int32)
+
+# 0x7x others
+0x70 print_i32 (): (int32) -> ()
+

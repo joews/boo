@@ -10,10 +10,10 @@ instruction = opcodeHex:opcode _ mnemonic:mnemonic _ argTypes:type_list ":" _ op
 }
 
 opcode = "0x" [0-9a-f][0-9a-f] {
-  return text()
+  return text();
 }
 
-mnemonic = [a-z0-9]+ {
+mnemonic = [a-z0-9_]+ {
   return text()
 }
 

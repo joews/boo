@@ -8,7 +8,7 @@ void test_e2e() {
   // iconst 5
   // add
   int code_length = 5;
-  uint8_t code[] = { 0, 7, 0, 5, 1 };
+  uint8_t code[] = { 0x01, 7, 0x01, 5, 0x10 };
 
   int stack_length = 2;
   int stack[stack_length];

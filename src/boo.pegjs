@@ -24,7 +24,7 @@ instruction = eol* label:label? mnemonic:mnemonic operands:(__ o:operand { retur
   }
 }
 
-mnemonic = [a-z]+ { return text() }
+mnemonic = [a-z0-9_]+ { return text() }
 label_name = [a-z]+ { return text() }
 
 label = name:label_name ":" ___ {

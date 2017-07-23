@@ -1,60 +1,92 @@
 /* eslint-env jest */
-import { Program } from '../types'
-import parse from '../parse'
-import compile from '../compile'
-import interpret from '../interpret'
+import { Program } from "../types";
+import parse from "../parse";
+import compile from "../compile";
+import interpret from "../interpret";
 
-function testInterpretBinary (name: string, program: Program, expected: any) {
+function testInterpretBinary(name: string, program: Program, expected: any) {
   test(name, () => {
-    const interpreted = interpret(program, { trace: true })
-    expect(interpreted).toEqual(expected)
-  })
+    const interpreted = interpret(program, { trace: true });
+    expect(interpreted).toEqual(expected);
+  });
 }
 
-function testInterpret (code: string, expected: any) {
+function testInterpret(code: string, expected: any) {
   test(code, () => {
-    const parsed = parse(code)
+    const parsed = parse(code);
     // console.log(parsed)
-    const compiled = compile(parsed)
+    const compiled = compile(parsed);
     // console.log(compiled)
-    const interpreted = interpret(compiled, { trace: true })
-    expect(interpreted).toEqual(expected)
-  })
+    const interpreted = interpret(compiled, { trace: true });
+    expect(interpreted).toEqual(expected);
+  });
 }
 
-// iconst 3
-// iconst 5
-// iadd
-testInterpretBinary('add 2 numbers', { code: new Uint8Array([0, 3, 0, 5, 1]), stackSize: 2, globalSize: 0 }, 8)
+// const_i32 3
+// const_i32 5
+// add_i32
+testInterpretBinary(
+  "add 2 numbers",
+  {
+    code: new Uint8Array([0x01, 3, 0x01, 5, 0x10]),
+    stackSize: 2,
+    globalSize: 0
+  },
+  8
+);
 
-// iconst 2
-// gstore 0
-// iconst 3
-// gstore 1
-// gload 0
-// gload 1
+// const_i32 2
+// store_g_i32 0
+// const_i32 3
+// store_g_i32 1
+// load_g_i32 0
+// load_g_i32 1
 // add
-testInterpretBinary('load and store', {
-  code: new Uint8Array([0, 2, 3, 0, 0, 3, 3, 1, 4, 0, 4, 1, 1]),
-  stackSize: 2,
-  globalSize: 2
-}, 5)
+testInterpretBinary(
+  "load and store",
+  {
+    code: new Uint8Array([
+      0x01,
+      2,
+      0x60,
+      0,
+      0x01,
+      3,
+      0x60,
+      1,
+      0x61,
+      0,
+      0x61,
+      1,
+      0x10
+    ]),
+    stackSize: 2,
+    globalSize: 2
+  },
+  5
+);
 
-testInterpret(`
-iconst 1
+testInterpret(
+  `
+const_i32 1
 jmp skip
-iconst 2
-iadd
+const_i32 2
+add_i32
 skip:
-  iconst 3
-iadd
-`, 4)
+  const_i32 3
+add_i32
+`,
+  4
+);
 
-testInterpret(`
-iconst 1
+testInterpret(
+  `
+const_i32 1
 halt
-iconst 2
-`, 1)
+const_i32 2
+`,
+  1
+);
 
 /*
 i = 0
@@ -64,92 +96,131 @@ do:
 while i != 3:
 i
 */
-testInterpret(`
+testInterpret(
+  `
 .globals 1
-iconst 1
-gstore 0
+const_i32 1
+store_g_i32 0
 
 next:
 
-iconst 1
-gload 0
-iadd
-gstore 0
+const_i32 1
+load_g_i32 0
+add_i32
+store_g_i32 0
 
-gload 0
-iconst 3
-jne next
-gload 0
-`, 3)
+load_g_i32 0
+const_i32 3
+jne_i32 next
+load_g_i32 0
+`,
+  3
+);
 
-testInterpret(`
-iconst 1
-iconst 1
-eq
-`, 1)
+testInterpret(
+  `
+const_i32 1
+const_i32 1
+eq_i32
+`,
+  1
+);
 
-testInterpret(`
-iconst 1
-iconst 2
-eq
-`, 0)
+testInterpret(
+  `
+const_i32 1
+const_i32 2
+eq_i32
+`,
+  0
+);
 
-testInterpret(`
-iconst 7
-iconst 2
-ne
-`, 1)
+testInterpret(
+  `
+const_i32 7
+const_i32 2
+ne_i32
+`,
+  1
+);
 
-testInterpret(`
-iconst 7
-iconst 7
-ne
-`, 0)
+testInterpret(
+  `
+const_i32 7
+const_i32 7
+ne_i32
+`,
+  0
+);
 
-testInterpret(`
-iconst 2
-iconst 1
-lt
-`, 1)
+testInterpret(
+  `
+const_i32 2
+const_i32 1
+lt_i32
+`,
+  1
+);
 
-testInterpret(`
-iconst 2
-iconst 2
-lt
-`, 0)
+testInterpret(
+  `
+const_i32 2
+const_i32 2
+lt_i32
+`,
+  0
+);
 
-testInterpret(`
-iconst 2
-iconst 1
-lte
-`, 1)
+testInterpret(
+  `
+const_i32 2
+const_i32 1
+lte_i32
+`,
+  1
+);
 
-testInterpret(`
-iconst 2
-iconst 2
-lte
-`, 1)
+testInterpret(
+  `
+const_i32 2
+const_i32 2
+lte_i32
+`,
+  1
+);
 
-testInterpret(`
-iconst 1
-iconst 2
-gt
-`, 1)
+testInterpret(
+  `
+const_i32 1
+const_i32 2
+gt_i32
+`,
+  1
+);
 
-testInterpret(`
-iconst 2
-iconst 2
-gt
-`, 0)
+testInterpret(
+  `
+const_i32 2
+const_i32 2
+gt_i32
+`,
+  0
+);
 
-testInterpret(`
-iconst 1
-iconst 2
-gte
-`, 1)
+testInterpret(
+  `
+const_i32 1
+const_i32 2
+gte_i32
+`,
+  1
+);
 
-testInterpret(`
-iconst 2
-iconst 2
-gte
-`, 1)
+testInterpret(
+  `
+const_i32 2
+const_i32 2
+gte_i32
+`,
+  1
+);
